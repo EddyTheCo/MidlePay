@@ -10,7 +10,7 @@ quint32 getCode(void)
 }
 
 
-MidlePay::MidlePay(QObject *parent):QObject(parent),m_address("smr1qq9j9n0wmqu7fhermm6x7lpw35zd8dn24vcty62u06wt7g0fa7fukh98hvc"),
+MidlePay::MidlePay(QObject *parent):QObject(parent),m_address("smr1qp9rtwlc00ksp0mvet8ugwvqu03ygzr8s3x77w3df9qw9srm3hwk2l0v9kf"),
     m_naddr("https://api.shimmer.network"),m_pass(false),rest_client(new Client(this)),mqtt_client(new ClientMqtt(this)),
     m_message("Waiting for the node"),m_amount(1000)
 {
