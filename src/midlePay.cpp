@@ -14,7 +14,10 @@ MidlePay::MidlePay(QObject *parent):QObject(parent),m_address("smr1qq9j9n0wmqu7f
     m_naddr("https://api.shimmer.network"),m_pass(false),rest_client(new Client(this)),mqtt_client(new ClientMqtt(this)),
     m_message("Waiting for the node"),m_amount(1000)
 {
-    m_tag=m_initTag+QString::number(getCode());
+
+    connect(this,&MidlePay::initTagChanged,this,[=](){
+        m_tag=m_initTag+QString::number(getCode());
+    });
     QObject::connect(mqtt_client,&QMqttClient::stateChanged,this,[=]
     {
         if(mqtt_client->state()==QMqttClient::Connected)
@@ -31,11 +34,6 @@ MidlePay::MidlePay(QObject *parent):QObject(parent),m_address("smr1qq9j9n0wmqu7f
                     m_pass=true;
                     emit passChanged();
                     resp->deleteLater();
-                }
-                else
-                {
-                    m_message="Payment was not accepted";
-                    emit messageChanged();
                 }
             });
 
