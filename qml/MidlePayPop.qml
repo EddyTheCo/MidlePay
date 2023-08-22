@@ -8,10 +8,10 @@ import midlePay
 Popup {
     id: root
 
-    property alias address:MidlePay.address
-    property alias nodeaddr:MidlePay.nodeaddr
-    property alias initTag:MidlePay.initTag
-    property alias amount:MidlePay.amount
+    property alias address:pay.address
+    property alias nodeaddr:pay.nodeaddr
+    property alias initTag:pay.initTag
+    property alias amount:pay.amount
 
     background: Rectangle
     {
@@ -22,11 +22,16 @@ Popup {
         radius:Math.min(width,height)*0.05
 
     }
+    MidlePay
+    {
+        id:pay
+    }
 
     modal: true
     focus: true
     closePolicy: Popup.NoAutoClose
-    visible: ! MidlePay.pass
+    visible: ! pay.pass
+    anchors.centerIn: Overlay.overlay
 
     ColumnLayout
     {
@@ -40,7 +45,7 @@ Popup {
             Layout.alignment: Qt.AlignTop|Qt.AlignHCenter
             Layout.minimumHeight:  100
             label.visible: false
-            textarea.text: MidlePay.message
+            textarea.text: pay.message
             textarea.readOnly: true
             textarea.wrapMode: Text.Wrap
         }
@@ -48,7 +53,7 @@ Popup {
         MyAddressQr
         {
             id:qrcode_
-            address:MidlePay.address
+            address:pay.address
             Layout.preferredWidth: tex.width*0.55
             Layout.preferredHeight: width
 
