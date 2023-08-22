@@ -32,7 +32,6 @@ class MIDLE_EXPORT MidlePay : public QObject
         Q_PROPERTY(quint64  amount MEMBER m_amount NOTIFY amountChanged)
 
 		QML_ELEMENT
-		QML_SINGLETON
 
 	public:
         MidlePay(QObject *parent = nullptr);
