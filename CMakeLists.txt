@@ -51,7 +51,7 @@ FetchContent_MakeAvailable(qaddr_bundle)
 FetchContent_Declare(
         qclient
         GIT_REPOSITORY https://github.com/EddyTheCo/Qclient-IOTA.git
-        GIT_TAG v0.2.1
+        GIT_TAG v0.2.2
         FIND_PACKAGE_ARGS 0 CONFIG
         )
 FetchContent_MakeAvailable(qclient)
@@ -59,7 +59,7 @@ FetchContent_MakeAvailable(qclient)
 FetchContent_Declare(
         qclientMQTT
         GIT_REPOSITORY https://github.com/EddyTheCo/QclientMqtt-IOTA.git
-        GIT_TAG v0.2.1
+        GIT_TAG v0.2.2
         FIND_PACKAGE_ARGS 0 CONFIG
         )
 FetchContent_MakeAvailable(qclientMQTT)
