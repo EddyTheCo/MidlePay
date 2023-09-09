@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.24)
 
 include(local_conf.cmake OPTIONAL)
 
@@ -25,8 +25,8 @@ include(GNUInstallDirs)
 FetchContent_Declare(
 	qrCode
 	GIT_REPOSITORY https://github.com/EddyTheCo/qrCode.git
-	GIT_TAG v0.0.1
-	FIND_PACKAGE_ARGS 0 CONFIG
+	GIT_TAG v0.0.2
+	FIND_PACKAGE_ARGS 0.0 CONFIG
 	)
 FetchContent_MakeAvailable(qrCode)
 
@@ -34,8 +34,8 @@ FetchContent_MakeAvailable(qrCode)
 FetchContent_Declare(
         qslip10
         GIT_REPOSITORY https://github.com/EddyTheCo/Qslip10.git
-        GIT_TAG v0.0.1
-        FIND_PACKAGE_ARGS 0 CONFIG
+        GIT_TAG v0.0.2
+        FIND_PACKAGE_ARGS 0.0 CONFIG
         )
 FetchContent_MakeAvailable(qslip10)
 
@@ -43,32 +43,24 @@ FetchContent_Declare(
         qaddr_bundle
         GIT_REPOSITORY https://github.com/EddyTheCo/QAddrBundle.git
         GIT_TAG v0.2.2
-        FIND_PACKAGE_ARGS 0 CONFIG
+        FIND_PACKAGE_ARGS 0.2 CONFIG
         )
 FetchContent_MakeAvailable(qaddr_bundle)
 
 
 FetchContent_Declare(
-        qclient
-        GIT_REPOSITORY https://github.com/EddyTheCo/Qclient-IOTA.git
-        GIT_TAG v0.2.2
-        FIND_PACKAGE_ARGS 0 CONFIG
-        )
-FetchContent_MakeAvailable(qclient)
-
-FetchContent_Declare(
         qclientMQTT
         GIT_REPOSITORY https://github.com/EddyTheCo/QclientMqtt-IOTA.git
-        GIT_TAG v0.2.2
-        FIND_PACKAGE_ARGS 0 CONFIG
+        GIT_TAG v0.2.3
+        FIND_PACKAGE_ARGS 0.2 CONFIG
         )
 FetchContent_MakeAvailable(qclientMQTT)
 
 FetchContent_Declare(
 	MyDesigns
 	GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
-        GIT_TAG v0.2.2
-	FIND_PACKAGE_ARGS 0 CONFIG
+        GIT_TAG v0.2.3
+	FIND_PACKAGE_ARGS 0.2 CONFIG
 	)
 FetchContent_MakeAvailable(MyDesigns)
 
@@ -88,6 +80,7 @@ if (Qt6_FOUND)
 		OUTPUT_TARGETS out_targets_var
 		OUTPUT_DIRECTORY
 		${CMAKE_CURRENT_BINARY_DIR}/midlePay
+		IMPORT_PATH ${QML_IMPORT_PATH}
 		)
 
 	target_link_libraries(midlePay PUBLIC Qt6::Gui Qt6::Quick)
@@ -95,18 +88,17 @@ if (Qt6_FOUND)
 	target_compile_definitions(midlePay PRIVATE WINDOWS_ACCOU)
 	target_include_directories(midlePay PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/midlePay>")
-        target_link_libraries(midlePay PUBLIC  QtQrGen qslip10 qaddr_bundle qclient qclientMQTT)
-
+        target_link_libraries(midlePay PUBLIC  QtQrGen qslip10 qaddr_bundle qclientMQTT)
 
 	install(TARGETS midlePay ${out_targets_var}
-		EXPORT midlePay-config
+		EXPORT midlePayTargets
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}
 		)
 	install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/
 		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/midlePay
 		)
 
-	install(EXPORT midlePay-config
+	install(EXPORT midlePayTargets
 		FILE midlePayTargets.cmake
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/midlePay
 		)
@@ -125,8 +117,8 @@ if (Qt6_FOUND)
 		${CMAKE_CURRENT_BINARY_DIR}/midlePayConfigVersion.cmake
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/midlePay
 		)
-	export(EXPORT midlePay-config
-		FILE "${CMAKE_CURRENT_BINARY_DIR}/midlePay-config.cmake"
+	export(EXPORT midlePayTargets
+		FILE "${CMAKE_CURRENT_BINARY_DIR}/midlePayTargets.cmake"
 		)
 	if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 		set(CPACK_PACKAGE_CONTACT "estervtech")
