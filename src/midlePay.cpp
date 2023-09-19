@@ -2,6 +2,15 @@
 #include <QRandomGenerator>
 #include <QCryptographicHash>
 
+namespace fooMidlePay
+{
+QString fooPrint(void)
+{
+    return "https://forum.qt.io/post/762513";
+}
+}
+
+
 using namespace qencoding::qbech32::Iota;
 
 quint32 getCode(void)
