@@ -10,6 +10,14 @@
 #include <QtQml/qqmlregistration.h>
 
 #include <QtCore/QtGlobal>
+
+//foo namespace to force the linker to link the backing library composed only of qml files
+namespace fooMidlePay
+{
+QString fooPrint(void);
+};
+
+
 #if defined(WINDOWS_ACCOU)
 # define MIDLE_EXPORT Q_DECL_EXPORT
 #else
@@ -22,7 +30,7 @@ using namespace qcrypto;
 
 class MIDLE_EXPORT MidlePay : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
         Q_PROPERTY(QString  address MEMBER m_address NOTIFY addressChanged)
         Q_PROPERTY(bool  pass MEMBER m_pass NOTIFY passChanged)
@@ -31,9 +39,9 @@ class MIDLE_EXPORT MidlePay : public QObject
         Q_PROPERTY(QString  initTag MEMBER m_initTag NOTIFY initTagChanged)
         Q_PROPERTY(quint64  amount MEMBER m_amount NOTIFY amountChanged)
 
-		QML_ELEMENT
+        QML_ELEMENT
 
-	public:
+    public:
         MidlePay(QObject *parent = nullptr);
 
 signals:
@@ -43,7 +51,7 @@ signals:
         void messageChanged();
         void initTagChanged();
         void amountChanged();
-	private:
+    private:
         bool checkTransfer(Node_output out);
         QString m_address,m_message,m_tag,m_initTag;
         QUrl m_naddr;
