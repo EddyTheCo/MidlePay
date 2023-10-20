@@ -25,8 +25,8 @@ include(GNUInstallDirs)
 FetchContent_Declare(
 	qrCode
 	GIT_REPOSITORY https://github.com/EddyTheCo/qrCode.git
-	GIT_TAG v0.0.2
-	FIND_PACKAGE_ARGS 0.0 CONFIG
+	GIT_TAG v0.3.1
+	FIND_PACKAGE_ARGS 0.3 CONFIG
 	)
 FetchContent_MakeAvailable(qrCode)
 
@@ -56,13 +56,6 @@ FetchContent_Declare(
         )
 FetchContent_MakeAvailable(qclientMQTT)
 
-FetchContent_Declare(
-	MyDesigns
-	GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
-        GIT_TAG v0.2.3
-	FIND_PACKAGE_ARGS 0.2 CONFIG
-	)
-FetchContent_MakeAvailable(MyDesigns)
 
 find_package(Qt6 COMPONENTS Core Gui Quick)
 
@@ -79,8 +72,8 @@ if (Qt6_FOUND)
 		"/esterVtech.com/imports"
 		OUTPUT_TARGETS out_targets_var
 		OUTPUT_DIRECTORY
-		${CMAKE_CURRENT_BINARY_DIR}/midlePay
-		IMPORT_PATH ${QML_IMPORT_PATH}
+		${CMAKE_BINARY_DIR}/midlePay
+		IMPORT_PATH ${CMAKE_BINARY_DIR}
 		)
 
 	target_link_libraries(midlePay PUBLIC Qt6::Gui Qt6::Quick)
@@ -90,7 +83,7 @@ if (Qt6_FOUND)
 		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/midlePay>")
         target_link_libraries(midlePay PUBLIC  QtQrGen qslip10 qaddr_bundle qclientMQTT)
 
-	install(TARGETS midlePay ${out_targets_var}
+	install(TARGETS midlePay midlePayplugin ${out_targets_var}
 		EXPORT midlePayTargets
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}
 		)
@@ -98,6 +91,9 @@ if (Qt6_FOUND)
 		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/midlePay
 		)
 
+	install(DIRECTORY ${CMAKE_BINARY_DIR}/midlePay/
+		DESTINATION ${CMAKE_INSTALL_LIBDIR}/QMLPlugins/midlePay
+		)
 	install(EXPORT midlePayTargets
 		FILE midlePayTargets.cmake
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/midlePay
@@ -137,7 +133,3 @@ if(BUILD_DOCS)
         include(${build_docs})
 endif()
 
-
-list(APPEND QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/qml ${CMAKE_CURRENT_BINARY_DIR}/)
-list(REMOVE_DUPLICATES QML_IMPORT_PATH)
-set(QML_IMPORT_PATH ${QML_IMPORT_PATH} CACHE STRING "" FORCE)
