@@ -11,12 +11,6 @@
 
 #include <QtCore/QtGlobal>
 
-//foo namespace to force the linker to link the backing library composed only of qml files
-namespace fooMidlePay
-{
-QString fooPrint(void);
-};
-
 
 #if defined(WINDOWS_ACCOU)
 # define MIDLE_EXPORT Q_DECL_EXPORT
