@@ -52,8 +52,8 @@ MidlePay::MidlePay(QObject *parent):QObject(parent),m_address("smr1qp9rtwlc00ksp
 
         }
     });
-    mqtt_client->set_node_address(m_naddr);
-    rest_client->set_node_address(m_naddr);
+    mqtt_client->setNodeAddress(m_naddr);
+    rest_client->setNodeAddress(m_naddr);
 
 }
 bool MidlePay::checkTransfer(Node_output out)
